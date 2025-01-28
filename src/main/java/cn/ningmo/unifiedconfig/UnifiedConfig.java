@@ -66,6 +66,8 @@ public class UnifiedConfig extends JavaPlugin {
             
             // 获取该插件的配置信息
             for (String fileName : serverConfig.getConfigurationSection("plugins." + pluginName).getKeys(false)) {
+                if (fileName.equals("reload-command")) continue; // 跳过重载命令配置
+                
                 File configFile = new File(pluginFolder, fileName);
                 
                 // 在修改前创建备份
@@ -95,6 +97,19 @@ public class UnifiedConfig extends JavaPlugin {
                     sendMessage("write-failed",
                         new String[]{"%plugin%", "%file%", "%error%"},
                         new String[]{pluginName, fileName, e.getMessage()});
+                }
+            }
+            
+            // 执行重载命令
+            String reloadCommand = serverConfig.getString("plugins." + pluginName + ".reload-command");
+            if (reloadCommand != null && !reloadCommand.isEmpty()) {
+                try {
+                    getServer().dispatchCommand(getServer().getConsoleSender(), reloadCommand);
+                    sendMessage("plugin-reload-success", new String[]{"%plugin%"}, new String[]{pluginName});
+                } catch (Exception e) {
+                    sendMessage("plugin-reload-failed", 
+                        new String[]{"%plugin%", "%error%"}, 
+                        new String[]{pluginName, e.getMessage()});
                 }
             }
         }

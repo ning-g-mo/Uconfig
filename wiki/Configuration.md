@@ -18,6 +18,8 @@ settings:
 plugins:
   # 插件文件夹名称
   authme:
+    # 重载命令
+    reload-command: "authme reload"
     # 配置文件名称
     config.yml:
       # 配置路径和值
@@ -49,6 +51,7 @@ messages:
 - 使用插件的文件夹名称作为键（区分大小写）
 - 支持配置插件目录下的任意 yml 文件
 - 配置路径需要与目标文件的路径完全匹配
+- 可以通过 reload-command 指定插件的重载命令
 
 ### 消息设置 (messages)
 - 支持颜色代码（使用 & 符号）

@@ -15,6 +15,8 @@ settings:
 plugins:
   # AuthMe配置示例
   authme:
+    # 重载命令（可选）
+    reload-command: "authme reload"
     # 配置文件名
     config.yml:
       # 设置项
@@ -27,6 +29,7 @@ plugins:
       
   # LuckPerms配置示例
   luckperms:
+    reload-command: "lp reload"
     config.yml:
       server:
         name: survival
@@ -45,4 +48,6 @@ messages:
   backup-failed: "&c创建配置文件备份失败: &e%error%"
   write-success: "&a成功写入 &e%plugin%/%file%"
   write-failed: "&c无法保存 &e%plugin%/%file%&c: &e%error%"
-  plugin-not-found: "&c插件文件夹 &e%plugin% &c不存在!" 
+  plugin-not-found: "&c插件文件夹 &e%plugin% &c不存在!"
+  plugin-reload-success: "&a插件 &e%plugin% &a已重新加载"
+  plugin-reload-failed: "&c插件 &e%plugin% &c重载失败: &e%error%" 
