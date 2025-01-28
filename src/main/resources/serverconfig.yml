@@ -1,0 +1,47 @@
+# UnifiedConfig 配置文件
+# 作者: 柠枺
+
+# 基础设置
+settings:
+  # 是否检查更新
+  check-update: true
+  # 是否在修改配置前创建备份
+  backup-before-write: true
+  # 是否在写入配置时显示详细日志
+  verbose-logging: true
+
+# 插件配置写入列表
+plugins:
+  # AuthMe配置示例
+  authme:
+    # 配置文件名
+    config.yml:
+      # 设置项
+      settings:
+        serverName: 我的服务器
+        # 可以设置多个配置项
+        restrictions:
+          maxRegPerIp: 3
+          minPasswordLength: 6
+      
+  # LuckPerms配置示例
+  luckperms:
+    config.yml:
+      server:
+        name: survival
+      storage-method: mysql
+      
+  # 可以配置多个插件
+  # plugin-name:
+  #   config-file-name:
+  #     setting-path: value
+
+# 消息设置
+messages:
+  reload-success: "&a配置已重新加载!"
+  reload-no-permission: "&c你没有权限执行此命令!"
+  backup-created: "&a已创建配置文件备份: &e%file%"
+  backup-failed: "&c创建配置文件备份失败: &e%error%"
+  write-success: "&a成功写入 &e%plugin%/%file%"
+  write-failed: "&c无法保存 &e%plugin%/%file%&c: &e%error%"
+  plugin-not-found: "&c插件文件夹 &e%plugin% &c不存在!" 

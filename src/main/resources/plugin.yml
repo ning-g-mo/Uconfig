@@ -1,0 +1,15 @@
+name: UnifiedConfig
+version: 1.0.0
+main: cn.ningmo.unifiedconfig.UnifiedConfig
+api-version: '1.21'
+author: 柠枺
+description: 统一配置管理插件
+commands:
+  uc:
+    description: 重新加载配置
+    usage: /<command>
+    permission: unifiedconfig.reload
+permissions:
+  unifiedconfig.reload:
+    description: 允许重新加载配置
+    default: op 
