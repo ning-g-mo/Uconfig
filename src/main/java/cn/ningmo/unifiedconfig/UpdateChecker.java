@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class UpdateChecker {
     private final UnifiedConfig plugin;
-    private final String GITHUB_API_URL = "https://api.github.com/repos/ningmo/unifiedconfig/releases/latest";
+    private final String GITHUB_API_URL = "https://api.github.com/repos/ning-g-mo/Uconfig/releases/latest";
     
     public UpdateChecker(UnifiedConfig plugin) {
         this.plugin = plugin;
