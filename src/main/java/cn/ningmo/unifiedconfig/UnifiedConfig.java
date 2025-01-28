@@ -28,9 +28,23 @@ public class UnifiedConfig extends JavaPlugin {
     }
     
     private void createServerConfig() {
+        // 修改为服务器根目录
         serverConfigFile = new File(getServer().getWorldContainer(), "serverconfig.yml");
         if (!serverConfigFile.exists()) {
-            saveResource("serverconfig.yml", false);
+            // 从插件资源复制到服务器根目录
+            try {
+                saveResource("serverconfig.yml", true);
+                File source = new File(getDataFolder(), "serverconfig.yml");
+                java.nio.file.Files.move(
+                    source.toPath(),
+                    serverConfigFile.toPath(),
+                    java.nio.file.StandardCopyOption.REPLACE_EXISTING
+                );
+                // 删除插件目录下的配置文件
+                source.delete();
+            } catch (IOException e) {
+                getLogger().severe("无法创建配置文件: " + e.getMessage());
+            }
         }
         serverConfig = YamlConfiguration.loadConfiguration(serverConfigFile);
     }
@@ -121,7 +135,9 @@ public class UnifiedConfig extends JavaPlugin {
     }
     
     public void reloadServerConfig() {
+        // 重新从文件加载配置，这会读取最新的文件内容
         serverConfig = YamlConfiguration.loadConfiguration(serverConfigFile);
+        // 应用新的配置
         writeConfigs();
     }
     
