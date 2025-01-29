@@ -65,8 +65,14 @@ public class UnifiedConfig extends JavaPlugin {
             }
             
             // 获取该插件的配置信息
-            for (String fileName : serverConfig.getConfigurationSection("plugins." + pluginName).getKeys(false)) {
-                if (fileName.equals("reload-command")) continue; // 跳过重载命令配置
+            for (String configName : serverConfig.getConfigurationSection("plugins." + pluginName).getKeys(false)) {
+                if (configName.equals("reload-command")) continue; // 跳过重载命令配置
+                
+                // 确保使用完整的文件名
+                String fileName = configName;
+                if (!fileName.endsWith(".yml")) {
+                    fileName = fileName + ".yml";
+                }
                 
                 File configFile = new File(pluginFolder, fileName);
                 
@@ -78,12 +84,16 @@ public class UnifiedConfig extends JavaPlugin {
                 FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
                 
                 // 写入配置
-                String path = "plugins." + pluginName + "." + fileName;
-                for (String key : serverConfig.getConfigurationSection(path).getKeys(true)) {
-                    if (!serverConfig.isConfigurationSection(path + "." + key)) {
-                        config.set(key, serverConfig.get(path + "." + key));
+                String basePath = "plugins." + pluginName + "." + configName;
+                for (String key : serverConfig.getConfigurationSection(basePath).getKeys(true)) {
+                    if (!serverConfig.isConfigurationSection(basePath + "." + key)) {
+                        Object value = serverConfig.get(basePath + "." + key);
+                        // 移除配置路径前缀，只保留实际的配置路径
+                        String actualKey = key.replace("yml.", "");
+                        config.set(actualKey, value);
+                        
                         if (verboseLogging) {
-                            getLogger().info("设置 " + pluginName + "/" + fileName + ": " + key + " = " + serverConfig.get(path + "." + key));
+                            getLogger().info("设置 " + pluginName + "/" + fileName + " : " + actualKey + " = " + value);
                         }
                     }
                 }

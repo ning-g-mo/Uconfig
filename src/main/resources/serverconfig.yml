@@ -21,7 +21,7 @@ plugins:
     config.yml:
       # 设置项
       settings:
-        serverName: 我的服务器
+        serverName: "测试服务器"
         # 可以设置多个配置项
         restrictions:
           maxRegPerIp: 3
